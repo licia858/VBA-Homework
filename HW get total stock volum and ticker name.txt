@@ -1,0 +1,28 @@
+Sub hwpratice()
+    Dim tickername As String
+    Dim vol As Double
+    vol = 0
+    Dim sumtablerow As Double
+    sumtablerow = 2
+    
+    For i = 2 To 70926
+        If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+            tickername = Cells(i, 1).Value
+            vol = vol + Cells(i, 7).Value
+            
+            Range("K" & sumtablerow).Value = tickername
+            Cells("K1").Value = "ticker"
+            Range("L" & sumtablerow).Value = vol
+            Cells("L1").Value = "Total Stock Volume"
+            
+            sumtablerow = sumtablerow + 1
+            
+            vol = 0
+        
+        Else
+        
+         vol = vol + Cells(i, 7).Value
+        
+        End If
+    Next i
+End Sub
