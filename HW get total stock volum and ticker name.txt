@@ -26,3 +26,30 @@ Sub hwpratice()
         End If
     Next i
 End Sub
+
+Sub hwgroupws()
+    'the name of the new ws that will hold all the ws together
+    Sheets.Add.Name = "2nd run"
+    'to make the new ws first
+    Sheets("Combined_Data").Move before:=Sheets(1)
+    'specify the location of the combined sheets
+    Set Combined_sheet = Worksheets("Combined_Data")
+        'the 3 above steps only creats the new WS and names it(the WS is empty)
+    
+    'For each loop will loop all the sheets
+    For Each ws In Worksheets
+        '+ 1 for level first row empty for headers, finds the lastrow of the combinedsheet after each paste
+        lastrow = Combined_sheet.Cells(Rows.Count, "A").End(xlUp).Row + 1
+        'finds the last row of each ws , - 1 to return the numbers of row w/out the headers
+        lastrowstate = ws.Cells(Rows.Count, "A").End(xlUp).Row - 1
+        'copies the data of each worksheet
+        Combined_sheet.Range("A" & lastrow & ":G" & ((lastrowstate - 1) + lastrow)).Value = ws.Range("A2:G" & (lastrowstate + 1)).Value
+        
+    Next ws
+    'Formatting
+    'copy the headers from sheet1
+    combined_sheets.Range("A1:G1").vaule = Sheets(4).Range("A1:G1").vaule
+    'autofits columns
+    Combined_sheet.Columns("A:G").AutoFit
+
+End Sub
