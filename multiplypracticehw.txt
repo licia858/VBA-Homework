@@ -1,0 +1,44 @@
+Sub multipleyearstockdatahw()
+
+         ' Loop through all of the worksheets in the active workbook.
+For Each ws In Worksheets
+
+    Dim tickername As String
+    Dim vol As Double
+    vol = 0
+    Dim sumtablerow As Double
+    sumtablerow = 2
+    
+    For i = 2 To 70926
+        'compare items in the row
+        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+            'grab string item out of cell
+            tickername = ws.Cells(i, 1).Value
+            'grab integer (vol) from same row different column
+            vol = vol + ws.Cells(i, 7).Value
+            
+            'create a new column w/out header and store string from above
+            ws.Range("K" & sumtablerow).Value = tickername
+            'header for new colum
+            'ws.Cells("K1").Value = "ticker"
+            'create new column w/out header and store ing (vol)
+            ws.Range("L" & sumtablerow).Value = vol
+            'header for new column
+            'ws.Cells("L1").Value = "Total Stock Volume"
+            
+            sumtablerow = sumtablerow + 1
+            
+            vol = 0
+        
+        Else
+        
+         vol = vol + ws.Cells(i, 7).Value
+        
+        End If
+        
+    Next i
+         
+
+Next ws
+
+      End Sub
