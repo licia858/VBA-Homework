@@ -1,0 +1,77 @@
+Sub multipleyearstockdatahw()
+
+         ' Loop through all of the worksheets in the active workbook.
+For Each ws In Worksheets
+
+    Dim tickername As String
+    Dim vol As Double
+    vol = 0
+    Dim sumtablerow As Double
+    sumtablerow = 2
+    Dim totalopen As Double
+    totalopen = 0
+    Dim totalclose As Double
+    totalclose = 0
+    Dim yearlychange As Double
+    yearlychange = 0
+    
+    For i = 2 To 70926
+        'compare items in the row
+        If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
+            'grab string item out of cell
+            tickername = ws.Cells(i, 1).Value
+            'grab integer (vol) from same column different row
+            vol = vol + ws.Cells(i, 7).Value
+            
+            'grab total of open column for corresponding ticker
+            totalopen = totalopen + ws.Cells(i, 3).Value
+            ''grab total of open column for corresponding ticker
+            totalclose = totalclose + ws.Cells(i, 6).Value
+            
+            'find difference from open to close
+                        
+            'create a new column w/out header and store string from above
+            ws.Range("I" & sumtablerow).Value = tickername
+            'header for new colum
+            ws.Cells(1, 11).Value = "ticker"
+            'create new column w/out header and store ing (vol)
+            ws.Range("L" & sumtablerow).Value = vol
+            'header for new column
+            ws.Cells(1, 12).Value = "Total Stock Volume"
+            
+            sumtablerow = sumtablerow + 1
+            
+            
+            
+            vol = 0
+            totalopen = 0
+            totalclose = 0
+           
+        
+        Else
+        
+         vol = vol + ws.Cells(i, 7).Value
+         totalopen = totalopen + ws.Cells(i, 3).Value
+         totalclose = totalclose + ws.Cells(i, 6).Value
+         
+         
+        End If
+        
+        yearlychange = totalopen - totalclose
+        ws.Range("J" & sumtablerow).Value = yearlychange
+        
+            If yearlychange < 0 Then
+            ws.Cells(i, 10).Interior.ColorIndex = 3
+        Else
+            ws.Cells(i, 10).Interior.ColorIndex = 4
+        End If
+        
+             
+        
+    Next i
+      
+         
+
+Next ws
+
+      End Sub
